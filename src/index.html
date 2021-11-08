@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Stencil Component Starter</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+        <title>Stencil Component Starter</title>
 
-    <script type="module" src="/build/minimal-layout.esm.js"></script>
-    <script nomodule src="/build/minimal-layout.js"></script>
-  </head>
-  <body>
-    <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
-  </body>
+        <script type="module" src="/build/minimal-layout.esm.js"></script>
+        <script nomodule src="/build/minimal-layout.js"></script>
+    </head>
+    <body>
+        <basic-layout>
+            <div slot="header">Some Header</div>
+            <div slot="navigation">
+                <ul>
+                    <li>one</li>
+                    <li>two</li>
+                    <li>three</li>
+                </ul>
+            </div>
+            <div slot="content">Consectetur libero nihil possimus ab non itaque ut quidem Commodi</div>
+            <div slot="footer">Some Footer</div>
+        </basic-layout>
+        <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
+    </body>
 </html>

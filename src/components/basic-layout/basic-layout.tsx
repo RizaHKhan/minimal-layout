@@ -11,7 +11,7 @@ export class BasicLayout {
      */
 
     /**
-     * Show
+     * Show variable used to show/hide the side bar which becomes a dropdown
      */
     @State() show: boolean = false;
 
@@ -25,8 +25,8 @@ export class BasicLayout {
     };
 
     private generateBurgerClass = (): Record<string, boolean> => ({
-        burger: true,
-        show: this.show ? true : false,
+        'basic-layout__navigation': true,
+        'show': this.show ? true : false,
     });
 
     componentDidLoad() {
@@ -39,11 +39,11 @@ export class BasicLayout {
                 <div class="basic-layout">
                     <div class="basic-layout__header">
                         <slot name="header"></slot>
-                        <div class={this.generateBurgerClass()} onClick={this.handleBurgerClick}>
+                        <div class="burger" onClick={this.handleBurgerClick}>
                             <div class="bar"></div>
                         </div>
                     </div>
-                    <div class="basic-layout__navigation">
+                    <div class={this.generateBurgerClass()}>
                         <slot name="navigation"></slot>
                     </div>
                     <div class="basic-layout__content">

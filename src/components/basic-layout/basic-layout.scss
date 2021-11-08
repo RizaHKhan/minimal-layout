@@ -3,6 +3,7 @@
 }
 
 .burger {
+    cursor: pointer;
     display: block;
     @media (min-width: 600px) {
         display: none;
@@ -69,13 +70,7 @@
         max-height: 0px;
         overflow: hidden;
         padding: 0;
-
-        &::before {
-            content: 'X';
-            @media (min-width: 600px) {
-                content: '';
-            }
-        }
+        transition: all 0.5s ease;
 
         @media (min-width: 600px) {
             grid-area: navigation;
@@ -95,4 +90,8 @@
         @extend .card;
         grid-area: footer;
     }
+}
+
+.basic-layout__navigation.show {
+    max-height: 1000px;
 }

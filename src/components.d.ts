@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface BasicLayout {
     }
+    interface BasicList {
+    }
     interface MyComponent {
         /**
           * The first name
@@ -30,6 +32,12 @@ declare global {
         prototype: HTMLBasicLayoutElement;
         new (): HTMLBasicLayoutElement;
     };
+    interface HTMLBasicListElement extends Components.BasicList, HTMLStencilElement {
+    }
+    var HTMLBasicListElement: {
+        prototype: HTMLBasicListElement;
+        new (): HTMLBasicListElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -38,11 +46,14 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "basic-layout": HTMLBasicLayoutElement;
+        "basic-list": HTMLBasicListElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
     interface BasicLayout {
+    }
+    interface BasicList {
     }
     interface MyComponent {
         /**
@@ -60,6 +71,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "basic-layout": BasicLayout;
+        "basic-list": BasicList;
         "my-component": MyComponent;
     }
 }
@@ -68,6 +80,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "basic-layout": LocalJSX.BasicLayout & JSXBase.HTMLAttributes<HTMLBasicLayoutElement>;
+            "basic-list": LocalJSX.BasicList & JSXBase.HTMLAttributes<HTMLBasicListElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

@@ -1,4 +1,4 @@
-import { Component, Prop, State, Host, h, Listen } from '@stencil/core';
+import { Component, State, Host, h, Listen, Fragment } from '@stencil/core';
 import { ListItem } from '../../types/types';
 
 /**
@@ -17,12 +17,12 @@ import { ListItem } from '../../types/types';
 })
 export class BasicList {
     /**
-     * List item is a array of @ListItem
+     * Padding with increases as the list is rendered
      */
-    // @Prop() list: ListItem[];
+    @State() padding: number = 0;
 
     /**
-     * Test
+     * Test convert to prop
      */
     @State() list: ListItem[] = [
         { text: 'One', value: 'one' },
@@ -30,16 +30,31 @@ export class BasicList {
         {
             text: 'Three',
             children: [
-                { text: 'ThreeOne', value: 'ThreeOne' },
+                { text: 'Three - One', value: 'ThreeOne' },
                 {
-                    text: 'ThreeTwo',
+                    text: 'Three - Two',
                     children: [
                         { text: 'Foo', value: 'foo' },
                         { text: 'Barr', value: 'barr' },
                     ],
                 },
+                {
+                    text: 'Three - Four',
+                    children: [
+                        { text: 'Khadija', value: 'foo' },
+                        {
+                            text: 'Hamza',
+                            children: [
+                                { text: 'Hamza One', value: 'hamz' },
+                                { text: 'Hamza Two', value: 'hamz two' },
+                            ],
+                        },
+                    ],
+                },
             ],
         },
+        { text: 'Six', value: 'six' },
+        { text: 'Seven', value: 'seven' },
     ];
 
     @Listen('click', { capture: true })
@@ -47,20 +62,42 @@ export class BasicList {
         console.log('some item', event);
     }
 
-    private callback(item: ListItem) {
-        if (item.hasOwnProperty('value')) {
-            return <p>{item.text}</p>;
-        } else if (item.children.length) {
-            return item.children.map(i => this.callback(i));
-        }
+    // private setStyle = (): Record<string, string> => ({
+    //     'padding-left': `${this.padding}px`,
+    // });
+
+    private renderChildren(children: ListItem[]) {
+        return (
+            <Fragment>
+                {children.map(child => (
+                    <Fragment>{this.renderParent(child)}</Fragment>
+                ))}
+            </Fragment>
+        );
+    }
+
+    private renderParent(item: ListItem) {
+        return !item.hasOwnProperty('children') ? (
+            <li>
+                <p>{item.text}</p>
+            </li>
+        ) : (
+            <li>
+                <p>{item.text}</p>
+                <ul>{this.renderChildren(item.children)}</ul>
+            </li>
+        );
     }
 
     render() {
         return (
             <Host>
-                {this.list.map(item => {
-                    return this.callback(item);
-                })}
+                <ul>
+                    {/* The main level */}
+                    {this.list.map(item => (
+                        <Fragment>{this.renderParent(item)}</Fragment>
+                    ))}
+                </ul>
             </Host>
         );
     }

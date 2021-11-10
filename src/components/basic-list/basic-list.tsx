@@ -1,6 +1,15 @@
 import { Component, Prop, State, Host, h, Listen } from '@stencil/core';
 import { ListItem } from '../../types/types';
 
+/**
+ * Component should emit the 'value'
+ */
+
+/**
+ * Component should render children when clicking item with children
+ * Item with children is indicated by down caret
+ */
+
 @Component({
     tag: 'basic-list',
     styleUrl: 'basic-list.scss',
@@ -15,14 +24,20 @@ export class BasicList {
     /**
      * Test
      */
-    @State() list = [
+    @State() list: ListItem[] = [
         { text: 'One', value: 'one' },
         { text: 'Two', value: 'two' },
         {
             text: 'Three',
-            value: [
+            children: [
                 { text: 'ThreeOne', value: 'ThreeOne' },
-                { text: 'ThreeTwo', value: 'ThreeTwo' },
+                {
+                    text: 'ThreeTwo',
+                    children: [
+                        { text: 'Foo', value: 'foo' },
+                        { text: 'Barr', value: 'barr' },
+                    ],
+                },
             ],
         },
     ];
@@ -32,14 +47,20 @@ export class BasicList {
         console.log('some item', event);
     }
 
+    private callback(item: ListItem) {
+        if (item.hasOwnProperty('value')) {
+            return <p>{item.text}</p>;
+        } else if (item.children.length) {
+            return item.children.map(i => this.callback(i));
+        }
+    }
+
     render() {
         return (
             <Host>
-                <div>
-                    {this.list.map(item => (
-                        <p>{item.text}</p>
-                    ))}
-                </div>
+                {this.list.map(item => {
+                    return this.callback(item);
+                })}
             </Host>
         );
     }

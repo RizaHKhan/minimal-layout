@@ -83,7 +83,7 @@ export class BasicList {
             </li>
         ) : (
             <li>
-                <p>{item.text}</p>
+                <p class="parent">{item.text}</p>
                 <ul>{this.renderChildren(item.children)}</ul>
             </li>
         );
